@@ -1,5 +1,8 @@
 # 🚀 Java Spring MVC - Xây Dựng FullStack Website với Spring Boot
 
+thay đổi remote khi clone về như sau 
+git remote set-url origin https://github.com/nhattrinhh/laptop-mvc.git  
+
 This is the **starter project** for the **Java Spring MVC - Xây Dựng FullStack Website với Spring Boot** course by **Hỏi Dân IT**.
 
 ---
