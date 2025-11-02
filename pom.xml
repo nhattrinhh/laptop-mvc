@@ -34,11 +34,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- devtools để nhấn ctrl s tự động chạy lại dự án(đỡ phải click chạy lại) -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
-		</dependency> -->
+		</dependency>
 		<!-- thêm mysql -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
