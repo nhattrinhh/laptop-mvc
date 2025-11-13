@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,26 +54,7 @@ public class UserController {
         return "admin/user/show";
     }
 
-    @RequestMapping("/admin/user/update/{id}")
-    public String getUpdateUserPage(Model model, @PathVariable long id) {
-        User currentUser = this.userService.getUserById(id);
-        model.addAttribute("updateUser", currentUser);
-        return "admin/user/update";
-    }
-
-    @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat) {
-        User currentUser = this.userService.getUserById(nhat.getId());
-        if(currentUser != null){
-            currentUser.setEmail(nhat.getEmail());
-            currentUser.setAddress(nhat.getAddress());
-            currentUser.setFullName(nhat.getFullName());
-            currentUser.setPhone(nhat.getPhone());
-        }
-        this.userService.handleSaveUser(currentUser);
-        return "redirect:/admin/user";
-    }
-
+    // create
     @RequestMapping("/admin/user/create")
     public String getUserPage(Model model) {
         model.addAttribute("newUser", new User());
@@ -83,6 +65,42 @@ public class UserController {
     public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat) {
         // System.out.println("run here in terminal" + nhat);
         this.userService.handleSaveUser(nhat);
+        return "redirect:/admin/user";
+    }
+
+    // update
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserById(id);
+        model.addAttribute("updateUser", currentUser);
+        return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update")
+    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat) {
+        User currentUser = this.userService.getUserById(nhat.getId());
+        if (currentUser != null) {
+            currentUser.setAddress(nhat.getAddress());
+            currentUser.setFullName(nhat.getFullName());
+            currentUser.setPhone(nhat.getPhone());
+        }
+        this.userService.handleSaveUser(currentUser);
+        return "redirect:/admin/user";
+    }
+
+    // delete
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
+        model.addAttribute("newUser", new User());
+        return "admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("newUser") User nhat) {
+        this.userService.DeleteAUser(nhat.getId());
         return "redirect:/admin/user";
     }
 }

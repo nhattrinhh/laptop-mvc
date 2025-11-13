@@ -7,7 +7,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Create</title>
+                <title>Update user</title>
                 <!-- Latest compiled and minified CSS -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,11 +32,11 @@
                                 <!-- action la url tren server -->
                                 <div class="mb-3" style="display: none;">
                                     <label class="form-label">Id:</label>
-                                    <form:input class="form-control" type="id" path="id" />
+                                    <form:input class="form-control" type="text" path="id" />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email:</label>
-                                    <form:input class="form-control" type="email" path="email" />
+                                    <form:input class="form-control" type="email" path="email" disabled="true"/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Full Name:</label>

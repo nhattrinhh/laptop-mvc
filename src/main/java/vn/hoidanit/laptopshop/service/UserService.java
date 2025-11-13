@@ -31,6 +31,10 @@ public class UserService {
         return this.userRepository.findById(id);
     }
 
+    public void DeleteAUser(long id) {
+        this.userRepository.deleteById(id);
+    }
+
     public User handleSaveUser(User user) {
         /*
          * cach test
