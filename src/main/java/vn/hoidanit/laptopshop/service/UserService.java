@@ -15,6 +15,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+    
+    public List<User> getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
     public String handleHello() {
         return "Hello Service";
     }
