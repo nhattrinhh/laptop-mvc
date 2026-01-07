@@ -34,6 +34,11 @@ public class UserController {
         return "hello";
     }
 
+    @RequestMapping("/admin/user")
+    public String getHomeUser() {
+        return "admin/user/table-user";
+    }
+
     @RequestMapping("/admin/user/create")
     public String getUserCreate(Model model) {
         model.addAttribute("newUser", new User());
