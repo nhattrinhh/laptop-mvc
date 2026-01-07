@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-md-6 col-12 mx-auto">
                         <h3>Create a user</h3>
-                        <a href="" class="btn btn-close"></a>
+                        <a href="/admin/user" class="btn btn-close"></a>
                         <hr />
                         <form:form method="post" action="/admin/user/create1" modelAttribute="newUser">
                             <div class="mb-3">

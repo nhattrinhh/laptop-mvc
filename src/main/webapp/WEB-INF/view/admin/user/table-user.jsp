@@ -35,15 +35,20 @@
                                 </tr>
                             </thread>
                             <tbody>
+                                
                                 <tr>
-                                    <td>1</td>
-                                    <td>hai</td>
-                                    <td>hai</td>
-                                    <td>
-                                        <button class="btn btn-success">View</button>
-                                        <button class="btn btn-warning mx-2">update</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
+                                    <c:forEach var="user" items="${users}">
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.fullName}</td>
+                                            <td>
+                                                <button class="btn btn-success">View</button>
+                                                <button class="btn btn-warning mx-2">update</button>
+                                                <button class="btn btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tr>
                             </tbody>
                         </table>
