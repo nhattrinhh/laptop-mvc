@@ -18,6 +18,10 @@ public class UserService {
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
+
+    public User getUserById(long id) {
+        return this.userRepository.findById(id);
+    }
     
     public List<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
