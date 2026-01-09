@@ -38,7 +38,7 @@ public class UserController {
         System.out.println("USER BY EMAIL" + userByEmail);
         return "hello";
     }
-
+    
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
@@ -85,8 +85,23 @@ public class UserController {
             user.setAddress(nhat.getAddress());
             user.setPhone(nhat.getPhone());
             this.userService.handleSaveUser(user);
-        } else System.out.println("Nguoi dung khong ton tai");
-        
+        } else
+            System.out.println("Nguoi dung khong ton tai");
+
+        return "redirect:/admin/user";
+    }
+    
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        User user = new User();
+        user.setId(id);
+        model.addAttribute("deleteUser", user);
+        return "admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("deleteUser") User user) {
+        this.userService.handleDeleteUser(user.getId());
         return "redirect:/admin/user";
     }
 }
