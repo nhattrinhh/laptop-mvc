@@ -22,8 +22,6 @@ public class Product {
     private String factory;// nha sx
     private String target;// mục đích
 
-    
-
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", prire=" + prire + ", image=" + image + ", detailDesc="
