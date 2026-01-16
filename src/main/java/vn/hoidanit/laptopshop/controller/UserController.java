@@ -1,5 +1,8 @@
 package vn.hoidanit.laptopshop.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.ServletContext;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
@@ -18,9 +24,12 @@ import vn.hoidanit.laptopshop.service.UserService;
 public class UserController {
     // dependency injection
     private final UserService userService;
+    private final ServletContext servletContext;
 
-    public UserController(UserService userService) {
+
+    public UserController(UserService userService, ServletContext servletContext) {
         this.userService = userService;
+        this.servletContext = servletContext;
     }
 
     @RequestMapping("/")
@@ -62,9 +71,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat) {
+    public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            String rootPath = this.servletContext.getRealPath("/resources/images");
+
+            File dir = new File(rootPath + File.separator + "avatar");
+            if (!dir.exists())
+                dir.mkdirs();
+
+            // Create the file on server
+            File serverFile = new File(dir.getAbsolutePath() + File.separator +
+                    +System.currentTimeMillis() + "-" + file.getOriginalFilename());
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // System.out.println("run here in terminal" + nhat);
-        this.userService.handleSaveUser(nhat);
+        //this.userService.handleSaveUser(nhat);
         return "redirect:/admin/user";
     }
 
