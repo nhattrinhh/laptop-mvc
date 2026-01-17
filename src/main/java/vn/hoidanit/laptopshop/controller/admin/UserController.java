@@ -1,8 +1,5 @@
-package vn.hoidanit.laptopshop.controller;
+package vn.hoidanit.laptopshop.controller.admin;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,11 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.ServletContext;
 import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
@@ -97,12 +92,16 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat) {
+    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat,
+            @RequestParam("nhatFile") MultipartFile file) {
         User currentUser = this.userService.getUserById(nhat.getId());
         if (currentUser != null) {
             currentUser.setAddress(nhat.getAddress());
             currentUser.setFullName(nhat.getFullName());
             currentUser.setPhone(nhat.getPhone());
+            currentUser.setRole(this.userService.getRoleByName(nhat.getRole().getName()));
+            String avatarName = this.uploadService.handleUploadFile(file, "avatar");
+            currentUser.setAvatar(avatarName);
         }
         this.userService.handleSaveUser(currentUser);
         return "redirect:/admin/user";

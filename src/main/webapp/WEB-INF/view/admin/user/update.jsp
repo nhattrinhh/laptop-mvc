@@ -13,6 +13,18 @@
                 <title>Dashboard - Hỏi Dân IT</title>
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+                </script>
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
 
@@ -36,19 +48,19 @@
                                             </div>
                                             <hr>
 
-                                            <form:form method="post" action="/admin/user/update"
-                                                modelAttribute="updateUser">
+                                            <form:form class="row" method="post" action="/admin/user/update"
+                                                modelAttribute="updateUser" enctype="multipart/form-data">
                                                 <!-- action la url tren server -->
-                                                <div class="mb-3" style="display: none;">
+                                                <div class="mb-3 col-12 col-md-6" style="display: none;">
                                                     <label class="form-label">Id:</label>
                                                     <form:input class="form-control" type="text" path="id" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
                                                     <form:input class="form-control" type="email" path="email"
                                                         disabled="true" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Full Name:</label>
                                                     <form:input class="form-control" type="text" path="fullName" />
                                                 </div>
@@ -56,9 +68,23 @@
                                                     <label class="form-label">Address:</label>
                                                     <form:input class="form-control" type="text" path="address" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Phone Number:</label>
                                                     <form:input class="form-control" type="number" path="phone" />
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="">Role:</label>
+                                                    <form:select class="form-select" path="role.name">
+                                                        <form:option value="ADMIN">ADMIN</form:option>
+                                                        <form:option value="USER">USER</form:option>
+                                                    </form:select>
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label for="avatarFile" class="form-label">Avatar:</label>
+                                                    <input type="file" class="form-control" id="avatarFile" name="nhatFile" accept=".png, .jpg, .jpeg" />
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <img id="avatarPreview" alt="Avatar Preview" style="max-width: 200px; display: none;" />
                                                 </div>
                                                 <button class="btn btn-primary" type="submit">Update</button>
 
