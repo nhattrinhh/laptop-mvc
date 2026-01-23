@@ -52,16 +52,35 @@
                                                 modelAttribute="newUser" enctype="multipart/form-data">
                                                 <!-- action la url tren server -->
                                                 <div class="col-12 col-md-6 mb-3">
+                                                    <c:set var="errorEmail">
+                                                        <form:errors path="email" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <label class="form-label">Email:</label>
-                                                    <form:input class="form-control" type="email" path="email" />
+                                                    <form:input type="email"
+                                                        class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                                        path="email" />
+                                                    ${errorEmail}
                                                 </div>
                                                 <div class="col-12 col-md-6 mb-3">
+                                                    <c:set var="errorPassword">
+                                                        <form:errors path="password" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <label class="form-label">Password:</label>
-                                                    <form:input class="form-control" type="password" path="password" />
+                                                    <form:input type="password"
+                                                        class="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
+                                                        path="password" />
+                                                    ${errorPassword}
+
                                                 </div>
                                                 <div class="col-12 col-md-6 mb-3">
+                                                    <c:set var="errorFullName">
+                                                        <form:errors path="fullName" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <label class="form-label">Full Name:</label>
-                                                    <form:input class="form-control" type="text" path="fullName" />
+                                                    <form:input type="text"
+                                                        class="form-control ${not empty errorFullName ? 'is-invalid' : ''}"
+                                                        path="fullName" />
+                                                    ${errorFullName}
                                                 </div>
 
                                                 <div class="col-12 col-md-6 mb-3">
