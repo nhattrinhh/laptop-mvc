@@ -50,7 +50,7 @@
                                             </div>
                                             <hr>
                                             <form:form class="row" method="post" action="/admin/user/create"
-                                                modelAttribute="newUser">
+                                                modelAttribute="newUser" enctype="multipart/form-data">
                                                 <!-- action la url tren server -->
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
@@ -75,16 +75,16 @@
 
                                                 <div class="col-12 col-md-6 mb-3">
                                                     <label class="form-label">Role:</label>
-                                                    <select class="custom-select form-control">
-                                                        <option value="ADMIN">ADMIN</option>
-                                                        <option value="USER">USER</option>
-                                                    </select>
+                                                    <form:select class="custom-select form-control" path="role.name">
+                                                        <form:option value="ADMIN">ADMIN</form:option>
+                                                        <form:option value="USER">USER</form:option>
+                                                    </form:select>
                                                 </div>
 
                                                 <div class="col-12 col-md-6 mb-3">
                                                     <label for="avatarFile" class="form-label">Avatar:</label>
                                                     <input type="file" class="form-control" id="avatarFile"
-                                                        accept=".jpg,.jpeg,.png" />
+                                                        accept=".jpg,.jpeg,.png" name="hoidanitFile"/>
                                                 </div>
                                                 <div class="col-12 col-md-6 mb-3">
                                                     <img style="max-height: 250px; display: none;" type="file"

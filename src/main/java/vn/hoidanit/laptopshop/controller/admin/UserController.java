@@ -9,18 +9,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
 public class UserController {
     // dependency injection
     private final UserService userService;
-
-    public UserController(UserService userService) {
+    private final UploadService uploadService;
+    
+    public UserController(UserService userService, UploadService uploadService) {
         this.userService = userService;
+        this.uploadService = uploadService;
     }
 
     @RequestMapping("/")
@@ -61,10 +65,13 @@ public class UserController {
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat) {
-        // System.out.println("run here in terminal" + nhat);
-        this.userService.handleSaveUser(nhat);
+    @PostMapping(value = "/admin/user/create")
+    public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        
+
+        // this.userService.handleSaveUser(nhat);
         return "redirect:/admin/user";
     }
 
