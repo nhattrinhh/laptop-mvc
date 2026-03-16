@@ -36,28 +36,46 @@
                                                 <a href="/admin/user" class="btn btn-close"></a>
                                             </div>
                                             <hr>
-                                            <form:form method="post" action="/admin/user/create"
+                                            <form:form class="row" method="post" action="/admin/user/create"
                                                 modelAttribute="newUser">
                                                 <!-- action la url tren server -->
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
                                                     <form:input class="form-control" type="email" path="email" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Password:</label>
                                                     <form:input class="form-control" type="password" path="password" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Full Name:</label>
                                                     <form:input class="form-control" type="text" path="fullName" />
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="form-label">Phone Number:</label>
+                                                    <form:input class="form-control" type="number" path="phone" />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Address:</label>
                                                     <form:input class="form-control" type="text" path="address" />
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Phone Number:</label>
-                                                    <form:input class="form-control" type="number" path="phone" />
+
+                                                <div class="col-12 col-md-6 mb-3">
+                                                    <label class="form-label">Role:</label>
+                                                    <select class="custom-select form-control">
+                                                        <option value="ADMIN">ADMIN</option>
+                                                        <option value="USER">USER</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mb-3">
+                                                    <label for="avatarFile" class="form-label">Avatar:</label>
+                                                    <input type="file" class="form-control" id="avatarFile"
+                                                        accept=".jpg,.jpeg,.png" />
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-3">
+                                                    <img style="max-height: 250px; display: none;" type="file"
+                                                        class="form-control" id="avatarPreview" />
                                                 </div>
                                                 <button class="btn btn-primary" type="submit">Create</button>
 
