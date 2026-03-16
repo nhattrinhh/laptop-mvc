@@ -7,7 +7,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>User Detail ${id}</title>
+                <title>Table user</title>
                 <!-- Latest compiled and minified CSS -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,22 +23,33 @@
                     <div class="row">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
-                                <h3>User detail with id = ${id}</h3>
+                                <h3>Table user</h3>
+                                <a href="/admin/user/create" class="btn btn-primary">Create a user</a>
                             </div>
                             <hr>
-                            <div class="card" style="width:60%;">
-                                <div class="card-header">
-                                    User Information
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">ID: ${id}</li>
-                                    <li class="list-group-item">Email: ${user.email}</li>
-                                    <li class="list-group-item">Full name: ${user.fullName}</li>
-                                    <li class="list-group-item">Adress: ${user.address}</li>
-                                    <li class="list-group-item">Phone: ${user.phone}</li>
-                                </ul>
-                            </div>
-                            <a href="/admin/user" class="mt-2 btn btn-success">Back</a>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="user" items="${users1}">
+                                        <tr>
+                                            <th>${user.id}</th>
+                                            <td>${user.email}</td>
+                                            <td>${user.fullName}</td>
+                                            <td><a href="/admin/user/${user.id}" class="btn btn-success">View</a>
+                                                <a href="/admin/user/update/${user.id}" class="btn btn-warning">Update</a>
+                                                <a href="/admin/user/delete/${user.id}" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

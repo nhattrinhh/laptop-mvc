@@ -42,7 +42,7 @@ public class UserController {
         List<User> users = this.userService.getAllUsers();
         System.out.println("check user in terminal: " + users);
         model.addAttribute("users1", users);
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
 
     @RequestMapping("/admin/user/{id}")
@@ -51,7 +51,7 @@ public class UserController {
         model.addAttribute("id", id);
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
-        return "admin/user/show";
+        return "admin/user/detail";
     }
 
     // create
