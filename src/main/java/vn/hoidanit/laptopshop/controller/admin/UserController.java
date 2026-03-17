@@ -2,6 +2,8 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.repository.UserRepository;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
 public class UserController {
+    private final UserRepository userRepository;
     // dependency injection
     private final UserService userService;
     private final UploadService uploadService;
-    
-    public UserController(UserService userService, UploadService uploadService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserController(UserService userService, UploadService uploadService,
+            PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping("/")
@@ -68,10 +76,13 @@ public class UserController {
     @PostMapping(value = "/admin/user/create")
     public String getUserCreate(Model model, @ModelAttribute("newUser") User nhat,
             @RequestParam("hoidanitFile") MultipartFile file) {
-                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String hashPassword = passwordEncoder.encode(nhat.getPassword());
+        nhat.setAvatar(avatar);
+        nhat.setPassword(hashPassword);
+        nhat.setRole(this.userService.getRoleByName(nhat.getRole().getName()));
         
-
-        // this.userService.handleSaveUser(nhat);
+        this.userService.handleSaveUser(nhat);
         return "redirect:/admin/user";
     }
 
