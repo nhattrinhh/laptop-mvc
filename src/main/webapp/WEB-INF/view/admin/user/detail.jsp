@@ -43,8 +43,13 @@
                                                 <li class="list-group-item">ID: ${id}</li>
                                                 <li class="list-group-item">Email: ${user.email}</li>
                                                 <li class="list-group-item">Full name: ${user.fullName}</li>
+                                                <li class="list-group-item">Role: ${user.role.name}</li>
                                                 <li class="list-group-item">Adress: ${user.address}</li>
                                                 <li class="list-group-item">Phone: ${user.phone}</li>
+                                                <li class="list-group-item">
+                                                    Avatar:
+                                                    <img src="/images/avatar/${user.avatar}" alt="Avatar" style="max-width:100px; max-height:100px;">
+                                                </li>
                                             </ul>
                                         </div>
                                         <a href="/admin/user" class="mt-2 btn btn-success">Back</a>

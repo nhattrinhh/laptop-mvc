@@ -45,4 +45,20 @@ public class UploadService {
         return finalName;
     }
 
+    public String handleUpdateFile(MultipartFile file, String targetFolder, String nameAvatarOld) {
+        // Xóa file cũ nếu tồn tại
+        if (nameAvatarOld != null && !nameAvatarOld.isEmpty()) {// check name khác null or khác rỗng
+            String rootPath = this.servletContext.getRealPath("/resources/images");
+            String oldFilePath = rootPath + File.separator + targetFolder + File.separator + nameAvatarOld;
+            File oldFile = new File(oldFilePath);
+            if (oldFile.exists()) {//nếu đường dẫn này tồn tại file thì xóa
+                oldFile.delete();
+            }
+        }
+
+        // Upload file mới
+        String finalName = this.handleSaveUploadFile(file, targetFolder);
+        return finalName;
+    }
+
 }

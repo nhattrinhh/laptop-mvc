@@ -81,7 +81,7 @@ public class UserController {
         nhat.setAvatar(avatar);
         nhat.setPassword(hashPassword);
         nhat.setRole(this.userService.getRoleByName(nhat.getRole().getName()));
-        
+
         this.userService.handleSaveUser(nhat);
         return "redirect:/admin/user";
     }
@@ -95,14 +95,22 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat) {
+    public String postUpdateUser(Model model, @ModelAttribute("updateUser") User nhat,
+            @RequestParam("nhatFile") MultipartFile file) {
         User currentUser = this.userService.getUserById(nhat.getId());
         if (currentUser != null) {
+            // luu avatar xóa avatar cũ
+            String avatar = this.uploadService.handleUpdateFile(file, "avatar", currentUser.getAvatar());
+            currentUser.setAvatar(avatar);
+            //
             currentUser.setAddress(nhat.getAddress());
             currentUser.setFullName(nhat.getFullName());
             currentUser.setPhone(nhat.getPhone());
+            this.userService.handleSaveUser(currentUser);
+        } else {
+            System.out.println("");
         }
-        this.userService.handleSaveUser(currentUser);
+
         return "redirect:/admin/user";
     }
 
