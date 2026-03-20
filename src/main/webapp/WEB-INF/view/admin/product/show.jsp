@@ -46,21 +46,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <c:forEach var="user" items="${users1}">
+                                                <c:forEach var="pr" items="${prs}">
                                                     <tr>
-                                                        <th>${user.id}</th>
-                                                        <td>${user.email}</td>
-                                                        <td>${user.fullName}</td>
-                                                        <td>${user.role.name}</td>
-                                                        <td><a href="/admin/user/${user.id}"
+                                                        <th>${pr.id}</th>
+                                                        <td>${pr.name}</td>
+                                                        <td>${pr.price}</td>
+                                                        <td>${pr.factory}</td>
+                                                        <td><a href="/admin/product/${pr.id}"
                                                                 class="btn btn-success">View</a>
-                                                            <a href="/admin/user/update/${user.id}"
+                                                            <a href="/admin/product/update/${pr.id}"
                                                                 class="btn btn-warning">Update</a>
-                                                            <a href="/admin/user/delete/${user.id}"
+                                                            <a href="/admin/product/delete/${pr.id}"
                                                                 class="btn btn-danger">Delete</a>
                                                         </td>
                                                     </tr>
-                                                </c:forEach> -->
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
