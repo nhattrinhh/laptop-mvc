@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,11 +57,72 @@ public class ProductController {
         for (FieldError error : errors) {
             System.out.println(">>>>>>>>>>" + error.getField() + "-" + error.getDefaultMessage());
         }
-        
+
         String image = this.uploadService.handleSaveUploadFile(File, "product");
         pr.setImage(image);
 
         this.productService.handleSaveProduct(pr);
         return "redirect:/admin/product";
     }
+
+    // update pr
+    @GetMapping("/admin/product/update/{id}")
+    public String getUpdateProductPage(Model model, @PathVariable Long id) {
+        Optional<Product> currentPr = this.productService.getFindById(id);
+        model.addAttribute("updatePr", currentPr.get());
+        return "admin/product/update";
+    }
+
+    @PostMapping("/admin/product/update")
+    public String postUpdateProduct(Model model, @ModelAttribute("updatePr") @Valid Product prView,
+            BindingResult updatePrBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
+        // xu ly validate
+        if (updatePrBindingResult.hasErrors()) {
+        return "admin/product/update";
+        }
+
+
+        Product pr = this.productService.getFindById(prView.getId()).get();
+        if (pr != null) {
+            if (!file.isEmpty()) {
+                String image = this.uploadService.handleUpdateFile(file, "product", pr.getImage());
+                pr.setImage(image);
+            }
+            pr.setName(prView.getName());
+            pr.setPrice(prView.getPrice());
+            pr.setQuantity(prView.getQuantity());
+            pr.setDetailDesc(prView.getDetailDesc());
+            pr.setShortDesc(prView.getShortDesc());
+            pr.setFactory(prView.getFactory());
+            pr.setTarget(prView.getTarget());
+
+            this.productService.handleSaveProduct(pr);
+        }
+        
+
+        return "redirect:/admin/product";
+    }
+
+    // delete
+    @GetMapping("/admin/product/delete/{id}")
+    public String getDeleteProductPage(Model model, @PathVariable Long id) {
+        model.addAttribute("id", id);
+        model.addAttribute("deletePr", new Product());
+        return "admin/product/delete";
+    }
+
+    @PostMapping("/admin/product/delete")
+    public String postDeleteProduct(Model model, @ModelAttribute("deletePr") Product pr) {
+        this.productService.deleteProduct(pr.getId());
+        return "redirect:/admin/product";
+    }
+
+    //detail
+    @GetMapping("/admin/product/{id}")
+    public String getDetailProductPage(@PathVariable Long id, Model model) {
+        Product pr = this.productService.getFindById(id).get();
+        model.addAttribute("product", pr);
+        return "admin/product/detail";
+    }
+
 }

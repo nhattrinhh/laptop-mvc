@@ -61,11 +61,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getprice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setprice(double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

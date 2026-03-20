@@ -47,8 +47,7 @@
                                                 <li class="list-group-item">Adress: ${user.address}</li>
                                                 <li class="list-group-item">Phone: ${user.phone}</li>
                                                 <li class="list-group-item">
-                                                    Avatar:
-                                                    <img src="/images/avatar/${user.avatar}" alt="Avatar" style="max-width:100px; max-height:100px;">
+                                                    <img src="/images/avatar/${user.avatar}" alt="Avatar" class="card-img-top">
                                                 </li>
                                             </ul>
                                         </div>
