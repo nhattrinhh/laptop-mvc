@@ -2,8 +2,6 @@ package vn.hoidanit.laptopshop.service;
 
 import java.util.List;
 
-
-
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.laptopshop.domain.Role;
@@ -16,7 +14,7 @@ import vn.hoidanit.laptopshop.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    
+
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -57,11 +55,15 @@ public class UserService {
         return this.roleRepository.findByName(name);
     }
 
-    public User registerDTOtoUser(RegisterDTO registerDTO){
+    public User registerDTOtoUser(RegisterDTO registerDTO) {
         User user = new User();
         user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
         return user;
+    }
+
+    public boolean checkEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
     }
 }
