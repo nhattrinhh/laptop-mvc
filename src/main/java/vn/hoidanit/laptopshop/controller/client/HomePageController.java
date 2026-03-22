@@ -62,6 +62,12 @@ public class HomePageController {
         user.setPassword(hashPassword);
         user.setRole(this.userService.getRoleByName("USER"));
         this.userService.handleSaveUser(user);
+        return "client/auth/register";
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        model.addAttribute("loginUser", new User());
         return "client/auth/login";
     }
 }
