@@ -27,33 +27,30 @@
                                                 <h3 class="text-center font-weight-light my-4">Login</h3>
                                             </div>
                                             <div class="card-body">
-                                                <form:form method="post" action="/register"
-                                                    modelAttribute="loginUser">
-                                                    <c:set var="errorPassword">
-                                                        <form:errors path="password"
-                                                            cssClass="invalid-feedback" />
-                                                    </c:set>
-                                                    <c:set var="errorEmail">
-                                                        <form:errors path="email" cssClass="invalid-feedback" />
-                                                    </c:set>
+                                                <form method="post" action="/login" modelAttribute="loginUser">
+                                                    <c:if test="${param.error != null}">
+                                                        <div class="my-2" style="color: red;">Invalid email or password.
+                                                        </div>
+                                                    </c:if>
                                                     <div class="form-floating mb-3">
-                                                        <form:input
-                                                            class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
-                                                            type="email" placeholder="name@example.com" path="email" />
+                                                        <input class="form-control" type="email"
+                                                            placeholder="name@example.com" name="username" />
                                                         <label>Email address</label>
-                                                        ${errorEmail}
                                                     </div>
                                                     <div class="row mb-3">
                                                         <div class="">
                                                             <div class="form-floating mb-3 mb-md-0">
-                                                                <form:input
-                                                                    class="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
-                                                                    type="password" placeholder="Create a password"
-                                                                    path="password" />
+                                                                <input class="form-control" type="password"
+                                                                    placeholder="password" name="password" />
                                                                 <label>Password</label>
-                                                                ${errorPassword}
                                                             </div>
-                                                        </div>                                                    </div>
+                                                        </div>
+                                                        <div>
+                                                            <input type="hidden" name="${_csrf.parameterName}"
+                                                                value="${_csrf.token}" />
+
+                                                        </div>
+                                                    </div>
                                                     <div class="mt-4 mb-0">
                                                         <div class="d-grid">
                                                             <button class="btn btn-primary btn-block">
@@ -61,7 +58,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </form:form>
+                                                </form>
                                             </div>
                                             <div class="card-footer text-center py-3">
                                                 <div class="small"><a href="/register">Nead an account? Sign up!</a>
