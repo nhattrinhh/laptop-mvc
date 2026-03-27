@@ -1,0 +1,36 @@
+name: Deploy Spring Boot to VPS
+
+on:
+  push:
+    branches: ["master"] # Hoặc branch bạn đang dùng
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # 1. Di chuyển vào thư mục dự án trên VPS
+            # Thay 'my-project' bằng tên thư mục bạn đã clone repo
+            cd ~/project/laptop-mvc
+
+            # 2. Cập nhật code mới nhất
+            git pull origin master
+
+            # 3. Tạo file .env từ Secrets để Docker sử dụng
+            echo "DB_NAME=${{ secrets.DB_NAME }}" > .env
+            echo "DB_ROOT_PASSWORD=${{ secrets.DB_ROOT_PASSWORD }}" >> .env
+
+            # 4. Khởi chạy Docker (Build lại image Backend)
+            docker compose up -d --build
+
+            # 5. Dọn dẹp các Image cũ để tránh đầy ổ cứng VPS
+            docker image prune -f

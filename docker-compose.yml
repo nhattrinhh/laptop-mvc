@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_laptopshop
+    restart: always
+    environment:
+      # Lấy giá trị từ file .env
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: spring_laptopshop
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "80:8080"
+    environment:
+      # Truyền biến vào Spring Boot
+      MYSQL_HOST: db
+      MYSQL_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE_NAME: ${DB_NAME}
+
+volumes:
+  mysql_data:
