@@ -31,5 +31,4 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: 
             cd /opt/app
-            
             ./deploy.sh ${{ github.run_number }}
