@@ -31,5 +31,4 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /opt/app
-            sed -i 's|laptopshop:.*|laptopshop:${{ github.run_number }}|' docker-compose.yml
-            ./deploy.sh
+            ./deploy.sh ${{ github.run_number }}
